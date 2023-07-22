@@ -9,6 +9,15 @@ void execute_command(char *const args[])
 	pid_t child_pid;
 	int status;
 
+	if (args[0] == NULL)
+	{
+		return;
+	}
+	if (strcmp(args[0], "exit") == 0)
+	{
+		exit(EXIT_SUCCESS);
+	}
+
 	child_pid = fork();
 	if (child_pid == -1)
 	{
