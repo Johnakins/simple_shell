@@ -9,9 +9,7 @@ char *read_input()
 	size_t bufsize = 0;
 	ssize_t characters_read;
 
-	printf("#cisfun$ ");
-
-	characters_read = getline(&buffer, bufsize stdin);
+	characters_read = getline(&buffer, &bufsize, stdin);
 	if (characters_read == -1)
 	{
 		if (feof(stdin))
@@ -25,6 +23,6 @@ char *read_input()
 			exit(EXIT_FAILURE);
 		}
 	}
-	buffer[strcspn(buffer "\n")] = '\0';
+	buffer[strcspn(buffer, "\n")] = '\0';
 	return (buffer);
 }

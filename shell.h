@@ -5,10 +5,9 @@
 #include <unistd.h>
 #include <string.h>
 #include <sys/types.h>
-#include <sys/stat.h>
-#define MAX_INPUT 1000
-#define MAX_ARGS 100
-void execute_cmd(char **argv);
-void exit_shell();
-char *locate_cmd(char *command);
+#include <sys/wait.h>
+#define BUFFER_SIZE 1024
+void execute_command(char *const args[]);
+char *read_input();
+
 #endif
