@@ -9,5 +9,7 @@
 #define BUFFER_SIZE 1024
 void execute_command(char *const args[]);
 char *read_input();
+char **tokenize_input(char *input);
+void path_handler(char *const args[]);
 
 #endif

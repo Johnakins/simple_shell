@@ -6,7 +6,6 @@
 int main(void)
 {
 	char *buffer;
-	char *command;
 	char **args;
 
 	while (1)
@@ -14,20 +13,13 @@ int main(void)
 		printf("#cisfun$ ");
 		buffer = read_input();
 
-		command = strtok(buffer, " ");
-		args = (char **)malloc(2 * sizeof(char *));
-		if (!args)
+		args = tokenize_input(buffer);
+		if (args != NULL)
 		{
-			perror("malloc");
-			exit(EXIT_FAILURE);
+			execute_command(args);
+			free(args);
 		}
-
-		args[0] = command;
-		args[1] = NULL;
-
-		execute_command((char *const *)args);
 		free(buffer);
-		free(args);
 	}
 
 	return (0);

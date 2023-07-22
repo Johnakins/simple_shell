@@ -1,6 +1,6 @@
 #include "shell.h"
 /**
- * tokenize_inpute - tokenizes the input buffer into an array of strings
+ * tokenize_input - tokenizes the input buffer into an array of strings
  * @input: input buffer containing the command and arguments
  * Return: array of strings
  */

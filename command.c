@@ -1,7 +1,7 @@
 #include "shell.h"
 /**
  * execute_command - executes command for the shell
- * @command: command to be executed
+ * @args: command to be executed
  * Return: void
  */
 void execute_command(char *const args[])
@@ -18,12 +18,14 @@ void execute_command(char *const args[])
 
 	if (child_pid == 0)
 	{
-		execve(args[0], args, NULL);
-		perror(args[0]);
-		exit(EXIT_FAILURE);
+		if (execvp(args[0], args) == -1)
+		{
+			perror(args[0]);
+			exit(EXIT_FAILURE);
+		}
 	}
 	else
 	{
-		wait(&status);
+		waitpid(child_pid, &status, 0);
 	}
 }
