@@ -17,6 +17,11 @@ void execute_command(char *const args[])
 	{
 		exit(EXIT_SUCCESS);
 	}
+	else if (strcmp(args[0], "env") == 0)
+	{
+		env_builtin();
+		return;
+	}
 
 	child_pid = fork();
 	if (child_pid == -1)

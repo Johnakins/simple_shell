@@ -11,5 +11,6 @@ void execute_command(char *const args[]);
 char *read_input();
 char **tokenize_input(char *input);
 void path_handler(char *const args[]);
-
+void env_builtin(void);
+extern char **environ;
 #endif
