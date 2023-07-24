@@ -18,5 +18,42 @@
 
 	```bash
 	git clone https://github.com/Johnakins/simple_shell.git
-
 	```
+2. Change the directory
+
+	```bash
+	cd simple_shell
+	```
+3. Compile the source code
+
+	```bash
+	gcc -Wall -Werror -Wextra -pedantic *.c -o cisfun
+	```
+4. Run the shell
+
+	```bash
+	./cisfun
+	```
+
+##Usage
+
+Once you run the **cisfun** shell, you can start entering commands. it supports basic commands like **ls** ,  **pwd** , **cd** , etc. along with their respective arguments. The shell will execute the commands and display the output on the terminal.
+
+## Examples
+
+Here are some examples of using the **cisfun** shell:
+	```bash
+	$ ./cisfun
+cisfun$ ls
+file1.txt  file2.txt  directory/
+cisfun$ pwd
+/home/user/documents/cisfun
+cisfun$ cd directory
+cisfun$ pwd
+/home/user/documents/cisfun/directory
+cisfun$ exit
+$
+```
+##Authors
+- John Akinola
+- Joshua Adeyeri
