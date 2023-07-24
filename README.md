@@ -35,28 +35,21 @@
 	./cisfun
 	```
 
-##Usage
+## Usage
 
 Once you run the **cisfun** shell, you can start entering commands. it supports basic commands like **ls** ,  **pwd** , **cd** , etc. along with their respective arguments. The shell will execute the commands and display the output on the terminal.
 
-## Examples
+## Example
 
-Here are some examples of using the **cisfun** shell:
+Here an example of using the **cisfun** shell:
 
 	```bash
 	$ ./cisfun
 	cisfun$ ls
 	file1.txt  file2.txt  directory/
-	cisfun$ pwd
-	/home/user/documents/cisfun
-	cisfun$ cd directory
-	cisfun$ pwd
-	/home/user/documents/cisfun/directory
-	cisfun$ exit
-	$
 	```
 
+## Authors
 
-##Authors
 - John Akinola
 - Joshua Adeyeri
