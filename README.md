@@ -42,6 +42,7 @@ Once you run the **cisfun** shell, you can start entering commands. it supports 
 ## Examples
 
 Here are some examples of using the **cisfun** shell:
+
 	```bash
 	$ ./cisfun
 	cisfun$ ls
@@ -54,6 +55,8 @@ Here are some examples of using the **cisfun** shell:
 	cisfun$ exit
 	$
 	```
+
+
 ##Authors
 - John Akinola
 - Joshua Adeyeri
