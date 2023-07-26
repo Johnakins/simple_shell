@@ -1,7 +1,7 @@
 #include "shell.h"
 /**
  * print_environment - prints the environment of the user
- * @Return: void
+ * Return: void
  */
 void print_environment(void)
 {
