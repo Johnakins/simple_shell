@@ -8,7 +8,4 @@
 #include <sys/wait.h>
 #define BUFFER_SIZE 1024
 void run_shell(void);
-char *read_input(void);
-void execute_command(char *command, char **args);
-void env_builtin(void);
 #endif
