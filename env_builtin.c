@@ -3,7 +3,7 @@
  * print_environment - prints the environment of the user
  * @Return: void
  */
-void print_environment()
+void print_environment(void)
 {
 	char **env_var = environ;
 
