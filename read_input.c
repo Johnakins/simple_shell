@@ -1,6 +1,6 @@
 #include "shell.h"
 /**
- * read_input - reads inputs on the shell
+ * read_input - reads the user's input
  * Return: character
  */
 char *read_input()
@@ -14,7 +14,8 @@ char *read_input()
 	{
 		if (feof(stdin))
 		{
-			return (NULL);
+			printf("\n");
+			exit(EXIT_SUCCESS);
 		}
 		else
 		{
