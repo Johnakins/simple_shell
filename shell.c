@@ -1,45 +1,54 @@
 #include "chell.h"
 
-int main(int argc, char *argv[], char *envp[]) {
-    char **string;
-    size_t n = 20, imbt = 0, pt = 4;
-    int num_char;
-    char *ptr, *nc;
+/*
+ * main - operate
+ * @argc - argc
+ * @*argv[] - argument vector
+ * @*envp[] - env variables
+ * 
+ * returns integer
+ */
 
-    if (argc > 1)
-        argv[1] = NULL;
+int main(int argc, char *argv[], char *envp[])
+{
+	char **string;
+	size_t n = 20, imbt = 0, pt = 4;
+	int num_char;
+	char *ptr, *nc;
 
-    while (1) {
-        if (isatty(STDIN_FILENO))
-            printf("#cisfun$ ");
-        ptr = malloc(sizeof(char) * n);
-        num_char = getline(&ptr, &n, stdin);
-        if (num_char == -1) {
-            free(ptr);
-            exit(EXIT_FAILURE);
-        }
-        if (*ptr != '\n') { 
-            string = chstrtok(ptr); 
-            if (_strcmp("exit", string[0]) == 0) { 
-                break;
-            }
-            imbt = checkinbuilt(string[0]);
-            nc = filechk(string[0]);
-            if (imbt == 0 && nc != NULL) {
-                string[0] = nc;
-            }
-            pt = pathchk(string[0]);
-            if (pt == 1) {
-                forkexe(string, envp);
-            }
-            if (nc == NULL && pt == 0 && imbt == 0) {
-                printf("./shell: No such file or directory\n");
-            }
-            free(nc); 
-            free(ptr); 
-            free(string); 
-        }
-    }
-    exit(0);
+	if (argc > 1)
+		argv[1] = NULL;
+
+	while (1)
+	{
+		if (isatty(STDIN_FILENO));
+			printf("#cisfun$ ");
+		ptr = malloc(sizeof(char) * n);
+		num_char = getline(&ptr, &n, stdin);
+		if (num_char == -1)
+		{	
+			free(ptr);
+			exit(EXIT_FAILURE);
+		}
+        	if (*ptr != '\n')
+            	{
+			string = chstrtok(ptr);
+			if (_strcmp("exit", string[0]) == 0)
+				break;
+			imbt = checkinbuilt(string[0]);
+			nc = filechk(string[0]);
+			if (imbt == 0 && nc != NULL)
+				string[0] = nc;
+			pt = pathchk(string[0]);
+			if (pt == 1)
+				forkexe(string, envp);
+			if (nc == NULL && pt == 0 && imbt == 0)
+				printf("./shell: No such file or directory\n");
+			free(nc);
+			free(ptr);
+			free(string);
+		}
+	}
+	exit(0);
 }
 
