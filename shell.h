@@ -12,6 +12,7 @@ void execute_command(char *const args[]);
 char *read_input();
 char **tokenize_input(char *input);
 void print_environment(void);
+int builtin_exit(void);
 
 extern char **environ;
 #endif
