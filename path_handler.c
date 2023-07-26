@@ -1,49 +1,43 @@
 #include "shell.h"
 /**
- * path_handler - executes command for the shell, handles path
- * @args: array of command and its arguments
- * Return: void
+ * path_handler - checks if command exist in PATH
+ * @command: the command to look for
+ * Return: pointer to the full path of the command
  */
-void path_handler(char *const args[])
+char *path_handler(const char *command)
 {
-	char *command = args[0], *path = getenv("PATH");
-	char *path_copy = strdup(path);
-	char *token = strtok(path_copy, ":");
-	char *full_path;
+	char *path_env = getenv("PATH");
+	char *path_copy = strdup(path_env);
+	char *path_dir = strtok(path_copy, ":");
+	char *full_path = (char *)malloc(strlen(path_dir) + strlen(command) + 2);
 
-	if (path == NULL)
+	if (path_env == NULL)
 	{
-		printf("PATH environmentl variable is not set.\n");
-		return;
+		return (NULL);
 	}
 	if (path_copy == NULL)
 	{
 		perror("strdup");
-		return;
+		exit(EXIT_FAILURE);
 	}
-	while (token != NULL)
+	while (path_dir != NULL)
 	{
-		full_path = (char *)malloc(strlen(token) + strlen(command) + 2);
 		if (full_path == NULL)
 		{
 			perror("malloc");
 			free(path_copy);
-			return;
+			exit(EXIT_FAILURE);
 		}
-		strcpy(full_path, token);
-		strcat(full_path, "/");
-		strcat(full_path, command);
+		sprintf(full_path, "%s%s", path_dir, command);
+
 		if (access(full_path, X_OK) == 0)
 		{
-			execve(full_path, args, NULL);
-			perror(full_path);
-			free(full_path);
 			free(path_copy);
-			return;
+			return (full_path);
 		}
 		free(full_path);
-		token = strtok(NULL, ":");
+		path_dir = strtok(NULL, ":");
 	}
 	free(path_copy);
-	printf("%s: command not found\n", command);
+	return (NULL);
 }

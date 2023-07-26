@@ -1,6 +1,6 @@
 #include "shell.h"
 /**
- * main - entry of the code
+ * main - code enters
  * Return: always 0
  */
 int main(void)
@@ -10,17 +10,30 @@ int main(void)
 
 	while (1)
 	{
-		printf("#cisfun$ ");
+		printf("simple_shell$ ");
 		buffer = read_input();
 
 		args = tokenize_input(buffer);
 		if (args != NULL)
 		{
-			execute_command(args);
+			if (strcmp(args[0], "exit") == 0)
+			{
+				free(args);
+				free(buffer);
+				builtin_exit();
+			}
+			if (strcmp(args[0], "env") == 0)
+			{
+				print_environment();
+			}
+			else
+			{
+				execute_command(args);
+			}
+
 			free(args);
 		}
 		free(buffer);
 	}
-
 	return (0);
 }

@@ -1,5 +1,6 @@
 #ifndef SHELL_H
 #define SHELL_H
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -10,7 +11,9 @@
 void execute_command(char *const args[]);
 char *read_input();
 char **tokenize_input(char *input);
-void path_handler(char *const args[]);
-void env_builtin(void);
+void print_environment(void);
+int builtin_exit(void);
+char *path_handler(const char *command);
+
 extern char **environ;
 #endif

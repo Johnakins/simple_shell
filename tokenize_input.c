@@ -1,12 +1,12 @@
 #include "shell.h"
 /**
- * tokenize_input - tokenizes the input buffer into an array of strings
- * @input: input buffer containing the command and arguments
+ * tokenize_input - tokenizes the input buffer
+ * @input: the user input
  * Return: array of strings
  */
 char **tokenize_input(char *input)
 {
-	const char *delimiters = " \t\n";
+	const char *delimiter = " \t\n";
 	char **args = NULL;
 	char *token;
 	int bufsize = BUFFER_SIZE;
@@ -19,7 +19,7 @@ char **tokenize_input(char *input)
 		exit(EXIT_FAILURE);
 	}
 
-	token = strtok(input, delimiters);
+	token = strtok(input, delimiter);
 	while (token != NULL)
 	{
 		args[position] = token;
@@ -35,7 +35,7 @@ char **tokenize_input(char *input)
 				exit(EXIT_FAILURE);
 			}
 		}
-		token = strtok(NULL, delimiters);
+		token = strtok(NULL, delimiter);
 	}
 	args[position] = NULL;
 	return (args);
