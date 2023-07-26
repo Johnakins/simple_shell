@@ -14,8 +14,7 @@ char *read_input()
 	{
 		if (feof(stdin))
 		{
-			printf("\n");
-			exit(EXIT_FAILURE);
+			return (NULL);
 		}
 		else
 		{

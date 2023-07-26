@@ -4,24 +4,11 @@
  * @args: command to be executed
  * Return: void
  */
-void execute_command(char *const args[])
+void execute_command(char *command)
 {
+	char **args = (char **)malloc(2 * sizeof(char *));
 	pid_t child_pid;
 	int status;
-
-	if (args[0] == NULL)
-	{
-		return;
-	}
-	if (strcmp(args[0], "exit") == 0)
-	{
-		exit(EXIT_SUCCESS);
-	}
-	else if (strcmp(args[0], "env") == 0)
-	{
-		env_builtin();
-		return;
-	}
 
 	child_pid = fork();
 	if (child_pid == -1)
@@ -32,14 +19,21 @@ void execute_command(char *const args[])
 
 	if (child_pid == 0)
 	{
-		if (execvp(args[0], args) == -1)
+		if (!args)
 		{
-			perror(args[0]);
+			perror("malloc");
 			exit(EXIT_FAILURE);
 		}
+
+		args[0] = command;
+		args[1] = NULL;
+
+		execve(command, args, NULL);
+		perror(command);
+		exit(EXIT_FAILURE);
 	}
 	else
 	{
-		waitpid(child_pid, &status, 0);
+		wait(&status);
 	}
 }

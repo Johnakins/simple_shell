@@ -5,21 +5,22 @@
  */
 int main(void)
 {
-	char *buffer;
-	char **args;
+	char *command;
 
 	while (1)
 	{
 		printf("#cisfun$ ");
-		buffer = read_input();
-
-		args = tokenize_input(buffer);
-		if (args != NULL)
+		command = read_input();
+		if (command == NULL)
 		{
-			execute_command(args);
-			free(args);
+			printf("\n");
+			break;
 		}
-		free(buffer);
+
+		if (*command)
+			execute_command(command);
+
+		free(command);
 	}
 
 	return (0);
