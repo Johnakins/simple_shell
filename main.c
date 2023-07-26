@@ -16,7 +16,15 @@ int main(void)
 		args = tokenize_input(buffer);
 		if (args != NULL)
 		{
-			execute_command(args);
+			if (strcmp(args[0], "env") == 0)
+			{
+				print_environment();
+			}
+			else
+			{
+				execute_command(args);
+			}
+
 			free(args);
 		}
 		free(buffer);

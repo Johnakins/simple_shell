@@ -1,15 +1,15 @@
 #include "shell.h"
 /**
- * env_builtin - prints the current environment
- * Return: void
+ * print_environment - prints the environment of the user
+ * @Return: void
  */
-void env_builtin(void)
+void print_environment()
 {
-	char **env = environ;
+	char **env_var = environ;
 
-	while (*env != NULL)
+	while (*env_var != NULL)
 	{
-		printf("%s\n", *env);
-		env++;
+		printf("%s\n", *env_var);
+		env_var++;
 	}
 }

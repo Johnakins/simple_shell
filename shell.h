@@ -11,5 +11,7 @@
 void execute_command(char *const args[]);
 char *read_input();
 char **tokenize_input(char *input);
+void print_environment();
+
 extern char **environ;
 #endif
