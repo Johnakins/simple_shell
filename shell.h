@@ -13,6 +13,7 @@ char *read_input();
 char **tokenize_input(char *input);
 void print_environment(void);
 int builtin_exit(void);
+char *path_handler(const char *command);
 
 extern char **environ;
 #endif
