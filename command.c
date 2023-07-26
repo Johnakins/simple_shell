@@ -1,22 +1,30 @@
 #include "shell.h"
 /**
- * execute_cmd - executes command for the shell
- * @argv: argument vector
+ * execute_command - executes commands
+ * @args: arguments
  * Return: void
  */
-void execute_cmd(char **argv)
+void execute_command(char *const args[])
 {
-	char *cmd = NULL;
-	char *realcmd = NULL;
+	pid_t pid;
+	int status;
 
-	if (argv)
+	pid = fork();
+	if (pid == -1)
 	{
-		cmd = argv[0];
-		realcmd = locate_cmd(cmd);
-
-		if (execve(realcmd, argv, NULL) == -1)
+		perror("fork");
+		_exit(EXIT_FAILURE);
+	}
+	if (pid == 0)
+	{
+		if (execvp(args[0], args) == -1)
 		{
-			perror("Error executing command");
+			perror(args[0]);
+			_exit(EXIT_FAILURE);
 		}
+	}
+	else
+	{
+		waitpid(pid, &status, 0);
 	}
 }

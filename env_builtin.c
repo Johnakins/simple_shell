@@ -13,4 +13,3 @@ void print_environment(void)
 		env_var++;
 	}
 }
-
