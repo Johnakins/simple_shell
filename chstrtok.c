@@ -4,7 +4,7 @@ char **chstrtok(char *str) {
     char **arst, *pars;
     int i = 0, j = 0, num_tokens = 0;
 
-    // First pass to count the number of tokens
+   
     pars = strtok(str, " ");
     while (pars != NULL) {
         num_tokens++;
@@ -17,7 +17,6 @@ char **chstrtok(char *str) {
         exit(1);
     }
 
-    // Second pass to extract tokens and allocate memory for each token
     pars = strtok(str, " ");
     while (pars != NULL) {
         int token_length = strlen(pars);

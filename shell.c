@@ -3,7 +3,7 @@
 int main(int argc, char *argv[], char *envp[]) {
     char **string;
     size_t n = 20, imbt = 0, pt = 4;
-    size_t num_char;
+    int num_char;
     char *ptr, *nc;
 
     if (argc > 1)

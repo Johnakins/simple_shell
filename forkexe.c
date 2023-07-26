@@ -14,10 +14,10 @@ void forkexe(char *arstr[], char *envp[]) {
     if (child_pid == 0) {
         if (execve(arstr[0], arstr, envp) == -1) {
             perror("./shell: No such file or directory\n");
-            exit(EXIT_FAILURE); // Terminate the child process on execv error
+            exit(EXIT_FAILURE); 
         }
     } else {
-        wait(&status); // Pass the address of status to wait
+        wait(&status);
     }
 }
 

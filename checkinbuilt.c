@@ -27,8 +27,8 @@ int checkinbuilt(char *str) {
             free(arr);
             exit(0);
         case 2:
-            username = getenv("USER"); // Use "USER" instead of "HOSTNAME" to get the username
-            printf("Hello %s\n", username);
+            username = getenv("USER");
+	    printf("Hello %s\n", username);
             free(arr);
             return 1;
         default:
