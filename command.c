@@ -1,14 +1,27 @@
 #include "shell.h"
 /**
  * execute_command - executes command for the shell
- * @command: command to be executed
+ * @args: command to be executed
  * Return: void
  */
-void execute_command(char *command)
+void execute_command(char *const args[])
 {
-	char **args = (char **)malloc(2 * sizeof(char *));
 	pid_t child_pid;
 	int status;
+
+	if (args[0] == NULL)
+	{
+		return;
+	}
+	if (strcmp(args[0], "exit") == 0)
+	{
+		exit(EXIT_SUCCESS);
+	}
+	else if (strcmp(args[0], "env") == 0)
+	{
+		env_builtin();
+		return;
+	}
 
 	child_pid = fork();
 	if (child_pid == -1)
@@ -19,21 +32,14 @@ void execute_command(char *command)
 
 	if (child_pid == 0)
 	{
-		if (!args)
+		if (execvp(args[0], args) == -1)
 		{
-			perror("malloc");
+			perror(args[0]);
 			exit(EXIT_FAILURE);
 		}
-
-		args[0] = command;
-		args[1] = NULL;
-
-		execve(command, args, NULL);
-		perror(command);
-		exit(EXIT_FAILURE);
 	}
 	else
 	{
-		wait(&status);
+		waitpid(child_pid, &status, 0);
 	}
 }
