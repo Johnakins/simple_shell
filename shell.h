@@ -7,10 +7,8 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #define BUFFER_SIZE 1024
-void execute_command(char *const args[]);
-char *read_input();
-char **tokenize_input(char *input);
-void path_handler(char *const args[]);
+void run_shell(void);
+char *read_input(void);
+void execute_command(char *command, char **args);
 void env_builtin(void);
-extern char **environ;
 #endif
