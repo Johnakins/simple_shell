@@ -1,45 +1,22 @@
 #include "shell.h"
 /**
- * execute_command - executes command for the shell
- * @args: command to be executed
+ * execute_cmd - executes command for the shell
+ * @argv: argument vector
  * Return: void
  */
-void execute_command(char *const args[])
+void execute_cmd(char **argv)
 {
-	pid_t child_pid;
-	int status;
+	char *cmd = NULL;
+	char *realcmd = NULL;
 
-	if (args[0] == NULL)
+	if (argv)
 	{
-		return;
-	}
-	if (strcmp(args[0], "exit") == 0)
-	{
-		exit(EXIT_SUCCESS);
-	}
-	else if (strcmp(args[0], "env") == 0)
-	{
-		env_builtin();
-		return;
-	}
+		cmd = argv[0];
+		realcmd = locate_cmd(cmd);
 
-	child_pid = fork();
-	if (child_pid == -1)
-	{
-		perror("fork");
-		exit(EXIT_FAILURE);
-	}
-
-	if (child_pid == 0)
-	{
-		if (execvp(args[0], args) == -1)
+		if (execve(realcmd, argv, NULL) == -1)
 		{
-			perror(args[0]);
-			exit(EXIT_FAILURE);
+			perror("Error executing command");
 		}
-	}
-	else
-	{
-		waitpid(child_pid, &status, 0);
 	}
 }
