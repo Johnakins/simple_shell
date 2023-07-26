@@ -1,7 +1,7 @@
 #include "shell.h"
 /**
  * execute_command - executes command for the shell
- * @args: command to be executed
+ * @command: command to be executed
  * Return: void
  */
 void execute_command(char *command)
