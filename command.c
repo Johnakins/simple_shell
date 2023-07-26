@@ -13,14 +13,14 @@ void execute_command(char *const args[])
 	if (pid == -1)
 	{
 		perror("fork");
-		exit(EXIT_FAILURE);
+		_exit(EXIT_FAILURE);
 	}
 	if (pid == 0)
 	{
 		if (execvp(args[0], args) == -1)
 		{
 			perror(args[0]);
-			exit(EXIT_FAILURE);
+			_exit(EXIT_FAILURE);
 		}
 	}
 	else

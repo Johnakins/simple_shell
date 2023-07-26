@@ -8,6 +8,11 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #define BUFFER_SIZE 1024
+int _strcmp(const char *s1, const char *s2);
+size_t _strlen(const char *str);
+char **split_string(const char *str, char delimiter, int *num_tokens);
+char **_getenv(char *var);
+void _free(char **array);
 void execute_command(char *const args[]);
 char *read_input();
 char **tokenize_input(char *input);
