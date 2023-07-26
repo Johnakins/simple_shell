@@ -20,7 +20,7 @@ void execute_command(char *const args[])
 		if (execvp(args[0], args) == -1)
 		{
 			perror(args[0]);
-			_exit(EXIT_FAILURE);
+			exit(EXIT_FAILURE);
 		}
 	}
 	else

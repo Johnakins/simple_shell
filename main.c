@@ -16,13 +16,13 @@ int main(void)
 		args = tokenize_input(buffer);
 		if (args != NULL)
 		{
-			if (_strcmp(args[0], "exit") == 0)
+			if (strcmp(args[0], "exit") == 0)
 			{
 				free(args);
 				free(buffer);
 				builtin_exit();
 			}
-			if (_strcmp(args[0], "env") == 0)
+			if (strcmp(args[0], "env") == 0)
 			{
 				print_environment();
 			}

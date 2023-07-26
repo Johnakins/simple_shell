@@ -18,7 +18,7 @@ char *path_handler(const char *command)
 	if (path_copy == NULL)
 	{
 		perror("strdup");
-		_exit(EXIT_FAILURE);
+		exit(EXIT_FAILURE);
 	}
 	while (path_dir != NULL)
 	{
@@ -26,7 +26,7 @@ char *path_handler(const char *command)
 		{
 			perror("malloc");
 			free(path_copy);
-			_exit(EXIT_FAILURE);
+			exit(EXIT_FAILURE);
 		}
 		printf(full_path, "%s%s", path_dir, command);
 
