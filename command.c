@@ -1,10 +1,11 @@
 #include "shell.h"
 /**
  * execute_command - executes commands
- * @args: arguments
+ * @command: the command
+ * @program_name: the program_name to be displayed
  * Return: void
  */
-void execute_command(char* command, char* program_name)
+void execute_command(char *command, char *program_name)
 {
 	pid_t pid;
 	char *args[MAX_ARGUMENTS];
@@ -22,19 +23,19 @@ void execute_command(char* command, char* program_name)
 	pid = fork();
 	if (pid < 0)
 	{
-		fprintf(stderr, "%s: fork: unable to create a new process\n", program_name);
+	fprintf(stderr, "%s: fork: unable to create a new process\n", program_name);
 	}
 	else if (pid == 0)
 	{
 		execve(args[0], args, NULL);
-		fprintf(stderr, "%s: %s: command not found\n", program_name, args[0]);
+	fprintf(stderr, "%s: %s: command not found\n", program_name, args[0]);
 		exit(EXIT_FAILURE);
 	}
 	else
 	{
 		if (waitpid(pid, &status, 0) == -1)
 		{
-			fprintf(stderr, "%s: waitpid: error while waiting for chld process\n", program_name);
+		fprintf(stderr, "%s: waitpid: error waiting chld process\n", program_name);
 		}
 	}
 }

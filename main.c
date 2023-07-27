@@ -1,9 +1,11 @@
 #include "shell.h"
 /**
  * main - code enters
+ * @argc: argument count
+ * @argv: argument vector
  * Return: always 0
  */
-int main (int argc, char* argv[])
+int main(int argc, char *argv[])
 {
 	char input[MAX_COMMAND_LENGTH];
 	(void)argc;
