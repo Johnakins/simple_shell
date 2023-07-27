@@ -4,27 +4,37 @@
  * @args: arguments
  * Return: void
  */
-void execute_command(char *const args[])
+void execute_command(char* command)
 {
 	pid_t pid;
+	char *args[MAX_ARGUMENTS];
+	int i = 0;
+	char *token = strtok(command, " ");
 	int status;
 
+	while (token != NULL)
+	{
+		args[i++] = token;
+		token = strtok(NULL, " ");
+	}
+	args[i] = NULL;
+
 	pid = fork();
-	if (pid == -1)
+	if (pid < 0)
 	{
 		perror("fork");
-		_exit(EXIT_FAILURE);
 	}
-	if (pid == 0)
+	else if (pid == 0)
 	{
-		if (execvp(args[0], args) == -1)
-		{
-			perror(args[0]);
-			exit(EXIT_FAILURE);
-		}
+		execve(args[0], args, NULL);
+		perror("execve");
+		exit(EXIT_FAILURE);
 	}
 	else
 	{
-		waitpid(pid, &status, 0);
+		if (waitpid(pid, &status, 0) == -1)
+		{
+			perror("waitpid");
+		}
 	}
 }

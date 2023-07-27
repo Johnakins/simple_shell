@@ -3,37 +3,27 @@
  * main - code enters
  * Return: always 0
  */
-int main(void)
+int main (void)
 {
-	char *buffer;
-	char **args;
+	char input[MAX_COMMAND_LENGTH];
 
 	while (1)
 	{
-		printf("simple_shell$ ");
-		buffer = read_input();
+		printf("cisfun$ ");
+		fflush(stdout);
 
-		args = tokenize_input(buffer);
-		if (args != NULL)
+		if (fgets(input, sizeof(input), stdin) == NULL)
 		{
-			if (strcmp(args[0], "exit") == 0)
-			{
-				free(args);
-				free(buffer);
-				builtin_exit();
-			}
-			if (strcmp(args[0], "env") == 0)
-			{
-				print_environment();
-			}
-			else
-			{
-				execute_command(args);
-			}
-
-			free(args);
+			perror("fgets");
+			exit(EXIT_FAILURE);
 		}
-		free(buffer);
+		input[strcspn(input, "\n")] = '\0';
+		if (strcmp(input, "exit") == 0)
+		{
+			printf("Exiting the shell...\n");
+			break;
+		}
+		execute_command(input);
 	}
 	return (0);
 }
