@@ -27,9 +27,11 @@ void execute_command(char *command, char *program_name)
 	}
 	else if (pid == 0)
 	{
-		execve(args[0], args, NULL);
+		if (execve(args[0], args, environ) == -1)
+		{
 	fprintf(stderr, "%s: %s: command not found\n", program_name, args[0]);
 		exit(EXIT_FAILURE);
+		}
 	}
 	else
 	{
