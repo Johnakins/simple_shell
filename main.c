@@ -17,8 +17,8 @@ int main(int argc, char *argv[])
 
 		if (fgets(input, sizeof(input), stdin) == NULL)
 		{
-			fprintf(stderr, "%s: error while reading input\n", argv[0]);
-			exit(EXIT_FAILURE);
+			printf("\n");
+			break;
 		}
 		input[strcspn(input, "\n")] = '\0';
 		if (strcmp(input, "exit") == 0)
