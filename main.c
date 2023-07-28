@@ -25,7 +25,6 @@ int main(int argc, char *argv[])
 	shellname = argv[0];
 	while (1)
 	{
-		not_active();
 		printf("j$ ");
 
 		if (getline(&line, &line_size, stdin) == -1)
