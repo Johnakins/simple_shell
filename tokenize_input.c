@@ -1,43 +1,42 @@
 #include "shell.h"
 /**
- * tokenizer - tokenize input
- * @input: input to be parsed
- * @delimiter: delimiter to be used
- * Return: token array
+ * tokenize_input - tokenizes the input buffer
+ * @input: the user input
+ * Return: array of strings
  */
-char **tokenizer(char *input, char *delimiter)
+char **tokenize_input(char *input)
 {
-	int num_delimit = 0;
-	char **av = NULL;
-	char *token = NULL;
-	char *ptr = NULL;
+	const char *delimiter = " \t\n";
+	char **args = NULL;
+	char *token;
+	int bufsize = BUFFER_SIZE;
+	int position = 0;
 
-	token = _strtok_r(input, delimiter, &ptr);
+	args = (char **)malloc(bufsize * sizeof(char *));
+	if (!args)
+	{
+		perror("malloc");
+		exit(EXIT_FAILURE);
+	}
+
+	token = strtok(input, delimiter);
 	while (token != NULL)
 	{
-	av = _realloc(av, sizeof(*av) * num_delimit, sizeof(*av) * (num_delimit + 1));
-		av[num_delimit] = token;
-		token = _strtok_r(NULL, delimiter, &ptr);
-		num_delimit++;
-	}
-	av = _realloc(av, sizeof(*av) * num_delimit, sizeof(*av) * (num_delimit + 1));
-	av[num_delimit] = NULL;
+		args[position] = token;
+		position++;
 
-	return (av);
-}
-/**
- * _print - prints a string
- * @string: string to be printed
- * @srm: stream to print out to
- * Return: void
- */
-void _print(char *string, int srm)
-{
-	int i = 0;
-
-	while (string[i] != '\0')
-	{
-		write(srm, &string[i], 1);
-		i++;
+		if (position >= bufsize)
+		{
+			bufsize += BUFFER_SIZE;
+			args = (char **)realloc(args, bufsize * sizeof(char *));
+			if (!args)
+			{
+				perror("realloc");
+				exit(EXIT_FAILURE);
+			}
+		}
+		token = strtok(NULL, delimiter);
 	}
+	args[position] = NULL;
+	return (args);
 }
