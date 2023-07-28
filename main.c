@@ -1,4 +1,8 @@
 #include "shell.h"
+char **command = NULL;
+char *shellname = NULL;
+char *line = NULL;
+int status = 0;
 /**
  * main - code enters
  * @argc: argument count
@@ -7,26 +11,45 @@
  */
 int main(int argc, char *argv[])
 {
-	char input[MAX_COMMAND_LENGTH];
+	char **current_command = NULL;
+	int typ_command = 0;
+	size_t line_size = 0;
+	char *line = NULL;
+	char **command = NULL;
+	char *shellname;
+	int status = 0;
+	int i;
 	(void)argc;
 
+	signal(SIGINT, handler);
+	shellname = argv[0];
 	while (1)
 	{
-		printf("cisfun$ ");
-		fflush(stdout);
+		not_active();
+		printf("j$ ");
 
-		if (fgets(input, sizeof(input), stdin) == NULL)
+		if (getline(&line, &line_size, stdin) == -1)
 		{
-			printf("\n");
-			break;
+			free(line);
+			exit(status);
 		}
-		input[strcspn(input, "\n")] = '\0';
-		if (strcmp(input, "exit") == 0)
+		rm_newline(line);
+		rm_comment(line);
+		command = tokenizer(line, ";");
+		for (i = 0; command[i] != NULL; i++)
 		{
-			printf("Exiting the shell...\n");
-			break;
+			current_command = tokenizer(command[i], " ");
+			if (current_command[0] == NULL)
+			{
+				free(current_command);
+				break;
+			}
+			typ_command = parse_cmd(current_command[0]);
+			ini_tializer(current_command, typ_command, shellname);
+			free(current_command);
 		}
-		execute_command(input, argv[0]);
+		free(command);
 	}
-	return (0);
+	free(line);
+	return (status);
 }

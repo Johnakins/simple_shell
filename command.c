@@ -1,43 +1,42 @@
 #include "shell.h"
 /**
  * execute_command - executes commands
- * @command: the command
- * @program_name: the program_name to be displayed
+ * @tok_cmd: the command
+ * @typ_cmd: the program_name to be displayed
  * Return: void
  */
-void execute_command(char *command, char *program_name)
+void execute_command(char **tok_cmd, int typ_cmd, char *shellname)
 {
-	pid_t pid;
-	char *args[MAX_ARGUMENTS];
-	int i = 0;
-	char *token = strtok(command, " ");
-	int status;
+	void (*func)(char **cmd);
 
-	while (token != NULL)
+	if (typ_cmd == OUTTER_CMD)
 	{
-		args[i++] = token;
-		token = strtok(NULL, " ");
-	}
-	args[i] = NULL;
-
-	pid = fork();
-	if (pid < 0)
-	{
-	fprintf(stderr, "%s: fork: unable to create a new process\n", program_name);
-	}
-	else if (pid == 0)
-	{
-		if (execve(args[0], args, environ) == -1)
+		if (execve(tok_cmd[0], tok_cmd, NULL) == -1)
 		{
-	fprintf(stderr, "%s: %s: command not found\n", program_name, args[0]);
-		exit(EXIT_FAILURE);
+			perror(_getenv("PWD"));
+			exit(2);
 		}
 	}
-	else
+	if (typ_cmd == PATH_CMD)
 	{
-		if (waitpid(pid, &status, 0) == -1)
+		if (execve(path_check(tok_cmd[0]), tok_cmd, NULL) == -1)
 		{
-		fprintf(stderr, "%s: waitpid: error waiting chld process\n", program_name);
+			perror(_getenv("PWD"));
+			exit(2);
 		}
+	}
+	if (typ_cmd == INNER_CMD)
+	{
+		func = get_func(tok_cmd[0]);
+		func(tok_cmd);
+	}
+	if (typ_cmd == INV_CMD)
+	{
+		_print(shellname, STDERR_FILENO);
+		_print(": 1: ", STDERR_FILENO);
+		_print(tok_cmd[0], STDERR_FILENO);
+		_print(": not found\n", STDERR_FILENO);
+		status = 127;
 	}
 }
+
