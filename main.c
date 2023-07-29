@@ -1,39 +1,45 @@
 #include "shell.h"
+
 /**
- * main - code enters
- * Return: always 0
+ * main - function that describes the entry point
+ * @ac: argument count
+ * @av: argument vector
+ *
+ * Return: 0 when on success, 1 on error
  */
-int main(void)
+int main(int ac, char **av)
 {
-	char *buffer;
-	char **args;
+	info_t info[] = { INFO_INIT };
+	int fd = 2;
 
-	while (1)
+	asm ("mov %1, %0\n\t"
+			"add $3, %0"
+			: "=r" (fd)
+			: "r" (fd));
+
+	if (ac == 2)
 	{
-		printf("simple_shell$ ");
-		buffer = read_input();
-
-		args = tokenize_input(buffer);
-		if (args != NULL)
+		fd = open(av[1], O_RDONLY);
+		if (fd == -1)
 		{
-			if (strcmp(args[0], "exit") == 0)
+			if (errno == EACCES)
+				exit(126);
+			if (errno == ENOENT)
 			{
-				free(args);
-				free(buffer);
-				builtin_exit();
+				_eputs(av[0]);
+				_eputs(": 0: Can't open ");
+				_eputs(av[1]);
+				_eputchar('\n');
+				_eputchar(BUF_FLUSH);
+				exit(127);
 			}
-			if (strcmp(args[0], "env") == 0)
-			{
-				print_environment();
-			}
-			else
-			{
-				execute_command(args);
-			}
-
-			free(args);
+			return (EXIT_FAILURE);
 		}
-		free(buffer);
+		info->readfd = fd;
 	}
-	return (0);
+	populate_env_list(info);
+	read_history(info);
+	hsh(info, av);
+	return (EXIT_SUCCESS);
 }
+
